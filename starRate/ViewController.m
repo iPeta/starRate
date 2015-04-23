@@ -20,6 +20,7 @@
 
   self.view.backgroundColor = [UIColor lightGrayColor];
   CMNStarRateView *view = [[CMNStarRateView alloc] initWithFrame:CGRectMake(100, 100, 320, 64)];
+
   view.backgroundColor = [UIColor whiteColor];
   view.center = self.view.center;
   [self.view addSubview:view];
