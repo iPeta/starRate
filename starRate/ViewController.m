@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "CMNStarRateView.h"
 
 @interface ViewController ()
 
@@ -16,7 +17,15 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  // Do any additional setup after loading the view, typically from a nib.
+
+  self.view.backgroundColor = [UIColor lightGrayColor];
+  CMNStarRateView *view = [[CMNStarRateView alloc] initWithFrame:CGRectMake(100, 100, 320, 64)];
+  view.backgroundColor = [UIColor whiteColor];
+  view.center = self.view.center;
+  [self.view addSubview:view];
+  
+  
+  
 }
 
 - (void)didReceiveMemoryWarning {

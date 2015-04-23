@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CMNStarRateView : UIView
-
+@property (nonatomic,assign) NSInteger starNumber;
+@property (nonatomic,strong) UIColor *selectedColor;
+@property (nonatomic,strong) UIColor *unselectedColor;
 @end
