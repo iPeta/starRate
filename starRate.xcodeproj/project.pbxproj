@@ -14,6 +14,7 @@
 		77E92A131AE8F5880066F6DB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77E92A121AE8F5880066F6DB /* Images.xcassets */; };
 		77E92A161AE8F5880066F6DB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77E92A141AE8F5880066F6DB /* LaunchScreen.xib */; };
 		77E92A221AE8F5880066F6DB /* starRateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E92A211AE8F5880066F6DB /* starRateTests.m */; };
+		77E92A2D1AE8F5B20066F6DB /* CMNStarRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E92A2C1AE8F5B20066F6DB /* CMNStarRateView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		77E92A1B1AE8F5880066F6DB /* starRateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = starRateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E92A201AE8F5880066F6DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77E92A211AE8F5880066F6DB /* starRateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = starRateTests.m; sourceTree = "<group>"; };
+		77E92A2B1AE8F5B20066F6DB /* CMNStarRateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMNStarRateView.h; sourceTree = "<group>"; };
+		77E92A2C1AE8F5B20066F6DB /* CMNStarRateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMNStarRateView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +91,7 @@
 				77E92A0F1AE8F5880066F6DB /* Main.storyboard */,
 				77E92A121AE8F5880066F6DB /* Images.xcassets */,
 				77E92A141AE8F5880066F6DB /* LaunchScreen.xib */,
+				77E92A2E1AE8F5B60066F6DB /* starRate */,
 				77E92A051AE8F5880066F6DB /* Supporting Files */,
 			);
 			path = starRate;
@@ -117,6 +121,15 @@
 				77E92A201AE8F5880066F6DB /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		77E92A2E1AE8F5B60066F6DB /* starRate */ = {
+			isa = PBXGroup;
+			children = (
+				77E92A2B1AE8F5B20066F6DB /* CMNStarRateView.h */,
+				77E92A2C1AE8F5B20066F6DB /* CMNStarRateView.m */,
+			);
+			name = starRate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,6 +235,7 @@
 				77E92A0E1AE8F5880066F6DB /* ViewController.m in Sources */,
 				77E92A0B1AE8F5880066F6DB /* AppDelegate.m in Sources */,
 				77E92A081AE8F5880066F6DB /* main.m in Sources */,
+				77E92A2D1AE8F5B20066F6DB /* CMNStarRateView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
