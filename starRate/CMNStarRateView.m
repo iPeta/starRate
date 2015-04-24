@@ -8,10 +8,12 @@
 
 #import "CMNStarRateView.h"
 
+#define kStarMargin 15
+
 @interface CMNStarRateView ()
-@property (nonatomic,strong) UIView *bottomView;
-@property (nonatomic,strong) UIView *topView;
+@property (nonatomic,strong) UIView *foregroundView;
 @property (nonatomic,assign) CGFloat starWidth;
+@property (nonatomic,assign) CGFloat starHeight;
 @end
 @implementation CMNStarRateView
 
@@ -19,173 +21,77 @@
 {
   self = [super initWithFrame:frame];
   if (self) {
-    self.backgroundColor = [UIColor whiteColor];
-    self.bottomView = [[UIView alloc] initWithFrame:self.bounds];
-    self.bottomView.backgroundColor = [UIColor grayColor];
-    self.topView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.topView.backgroundColor = [UIColor orangeColor];
-    [self addSubview:self.bottomView];
-    [self addSubview:self.topView];
-    self.topView.clipsToBounds = YES;
-    self.topView.userInteractionEnabled = NO;
-    self.bottomView.userInteractionEnabled = NO;
+    CGFloat width  = (frame.size.width - 4 * kStarMargin) / 5;
+    CGFloat heigth = width;
+    _starWidth     = width;
+    _starHeight    = heigth;
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, _starHeight);
+    self.backgroundColor        = [UIColor lightGrayColor];
+    self.clipsToBounds          = YES;
     self.userInteractionEnabled = YES;
-    
+    _foregroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    _foregroundView.backgroundColor        = [UIColor orangeColor];
+    _foregroundView.userInteractionEnabled = NO;
+    [self addSubview:self.foregroundView];
 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
     [self addGestureRecognizer:tap];
-    [self addGestureRecognizer:pan];
-
     
-    CGFloat width = frame.size.width/7.0;
-    self.starWidth = width;
-    for(int i = 0;i<5;i++){
-      UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width*1, width*1)];
-      img.center = CGPointMake((i+1.5)*width, frame.size.height/2);
-      img.image = [UIImage imageNamed:@"star_clear"];
-      [self.bottomView addSubview:img];
-      UIImageView *img2 = [[UIImageView alloc] initWithFrame:img.frame];
-      img2.center = img.center;
-      img2.image = [UIImage imageNamed:@"star_clear"];
-      [self.topView addSubview:img2];
+    for(int i = 0; i < 5; i++) {
+      UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star_clear"]];
+      img.frame  = CGRectMake(i * (width + kStarMargin), 0, width,heigth);
+      [self addSubview:img];
+
+      CGRect starLeftViewF = CGRectMake(i * (width + kStarMargin) + width, 0, kStarMargin, heigth);
+      UIView *starLeftView = [[UIView alloc] initWithFrame:starLeftViewF];
+      starLeftView.backgroundColor = [UIColor whiteColor];
+      [self addSubview:starLeftView];
     }
-
-    
-    
   }
   return self;
 }
 
-
--(void)tap:(UITapGestureRecognizer *)gesture{
-  if(1){
-    CGPoint point = [gesture locationInView:self];
-    NSInteger count = (int)(point.x/self.starWidth)+1;
-    self.topView.frame = CGRectMake(0, 0, self.starWidth*count, self.bounds.size.height);
-    if(count>5){
-      _starNumber = 5;
-    }else{
-      _starNumber = count-1;
-    }
-  }
-}
--(void)pan:(UIPanGestureRecognizer *)gesture{
-  if(1){
-    CGPoint point = [gesture locationInView:self];
-    NSInteger count = (int)(point.x/self.starWidth);
-    if(count>=0 && count<=5 && _starNumber!=count){
-      self.topView.frame = CGRectMake(0, 0, self.starWidth*(count+1), self.bounds.size.height);
-      _starNumber = count;
-    }
-  }
-}
-//
-//  RatingBar.m
-//  MyRatingBar
-//
-//  Created by Leaf on 14-8-28.
-//  Copyright (c) 2014年 Leaf. All rights reserved.
-//
-
-#import "RatingBar.h"
-#define ZOOM 0.8f
-@interface RatingBar()
-@property (nonatomic,strong) UIView *bottomView;
-@property (nonatomic,strong) UIView *topView;
-@property (nonatomic,assign) CGFloat starWidth;
-@end
-
-@implementation RatingBar
-
-- (id)initWithFrame:(CGRect)frame
+#pragma mark -
+#pragma mark Properties
+-(void)setNumber:(CGFloat)number
 {
-  self = [super initWithFrame:frame];
-  if (self) {
-    // Initialization code
-    self.backgroundColor = [UIColor whiteColor];
-    self.bottomView = [[UIView alloc] initWithFrame:self.bounds];
-    self.bottomView.backgroundColor = [UIColor redColor];
-    self.topView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.topView.backgroundColor = [UIColor cyanColor];
-    
-    [self addSubview:self.bottomView];
-    [self addSubview:self.topView];
-    
-    self.topView.clipsToBounds = YES;
-    self.topView.userInteractionEnabled = NO;
-    self.bottomView.userInteractionEnabled = NO;
-    self.userInteractionEnabled = YES;
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
-    [self addGestureRecognizer:tap];
-    [self addGestureRecognizer:pan];
-    
-    //
-    CGFloat width = frame.size.width/7.0;
-    self.starWidth = width;
-    for(int i = 0;i<5;i++){
-      UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width*ZOOM, width*ZOOM)];
-      img.center = CGPointMake((i+1.5)*width, frame.size.height/2);
-      img.image = [UIImage imageNamed:@"bt_star_a"];
-      [self.bottomView addSubview:img];
-      UIImageView *img2 = [[UIImageView alloc] initWithFrame:img.frame];
-      img2.center = img.center;
-      img2.image = [UIImage imageNamed:@"bt_star_b"];
-      [self.topView addSubview:img2];
-    }
-    self.enable = YES;
-    
-  }
-  return self;
-}
--(void)setViewColor:(UIColor *)backgroundColor{
-  if(_viewColor!=backgroundColor){
-    self.backgroundColor = backgroundColor;
-    self.topView.backgroundColor = backgroundColor;
-    self.bottomView.backgroundColor = backgroundColor;
-  }
-}
--(void)setStarNumber:(NSInteger)starNumber{
-  if(_starNumber!=starNumber){
-    _starNumber = starNumber;
-    self.topView.frame = CGRectMake(0, 0, self.starWidth*(starNumber+1), self.bounds.size.height);
-  }
-}
--(void)tap:(UITapGestureRecognizer *)gesture{
-  if(self.enable){
-    CGPoint point = [gesture locationInView:self];
-    NSInteger count = (int)(point.x/self.starWidth)+1;
-    self.topView.frame = CGRectMake(0, 0, self.starWidth*count, self.bounds.size.height);
-    if(count>5){
-      _starNumber = 5;
-    }else{
-      _starNumber = count-1;
-    }
-  }
-}
--(void)pan:(UIPanGestureRecognizer *)gesture{
-  if(self.enable){
-    CGPoint point = [gesture locationInView:self];
-    NSInteger count = (int)(point.x/self.starWidth);
-    if(count>=0 && count<=5 && _starNumber!=count){
-      self.topView.frame = CGRectMake(0, 0, self.starWidth*(count+1), self.bounds.size.height);
-      _starNumber = count;
-    }
-  }
-}
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect
- {
- // Drawing code
- }
- */
+  _number = number;
+  CGFloat foregroundViewWidth;
+  NSUInteger starWidthNum = number * 2;
 
-@end
+  switch (_showMode) {
+    case CMNStarRateViewShowModeHalf:
+      foregroundViewWidth = starWidthNum * _starWidth * 0.5 + (int)number * kStarMargin;
+      break;
+    case CMNStarRateViewShowModeAccurate:
+      foregroundViewWidth = number * _starWidth + (int)number * kStarMargin;
+      break;
+    default:
+      break;
+  }
+  if (_starAlignment == CMNStarRateViewAlignmentLeft) {
+    self.foregroundView.frame = CGRectMake(0, 0, foregroundViewWidth, _starHeight);
+  }
+  else if(_starAlignment == CMNStarRateViewAlignmentRight){
+    self.foregroundView.frame = CGRectMake(self.frame.size.width - foregroundViewWidth, 0, foregroundViewWidth, _starWidth);
+  }
+}
 
+- (void)setForegroundColor:(UIColor *)foregroundColor
+{
+  _foregroundColor = foregroundColor;
+  _foregroundView.backgroundColor = foregroundColor;
+}
 
-
+#pragma mark -
+#pragma mark GestureEven
+-(void)tap:(UITapGestureRecognizer *)gesture
+{
+  if(self.allowsRating) {
+    CGPoint point   = [gesture locationInView:self];
+    NSInteger count = (int)(point.x / (_starWidth + kStarMargin)) + 1;
+    self.foregroundView.frame = CGRectMake(0, 0, (_starWidth + kStarMargin) * count, _starHeight);
+    _number = count;
+  }
+}
 @end
